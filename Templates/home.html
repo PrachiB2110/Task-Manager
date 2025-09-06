@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+ 
+{% block head %}
+
+{% endblock  %}
+
+{% block body %}
+<a style="position: absolute; top: 10px; right: 10px; text-decoration: none; padding: 10px 20px; color: white; border-radius: 5px; font-size: 16px;" href="/logout">Logout</a>
+
+
+    
+    <h2>Welcome {{user.username}} !</h1>
+
+
+
+<div class="content">
+    <h1 style="text-align: center;">Office Tasks Portal</h1>
+    {%if tasks|length < 1 %}
+
+<h4 style="text-align: center;">Enter Tasks</h4>
+
+    {%else%}
+    <table>
+        <tr>
+            <th>
+                Task
+            </th>
+            <th>Added</th>
+            <th>Actions</th>
+
+        </tr>
+{%for task in tasks%}
+        <tr>
+            <td>{{task.content}}</td>
+
+            <td>{{task.date_created.strftime("%c")}}</td>
+
+            <td>
+                <a href="/update/{{task.id}}">Update</a>
+                
+                <a href="/delete/{{task.id}}">Delete</a>
+
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    {%endif%}
+    <form action="/home/{{session['user_id']}}" method="POST">
+        <input type="text" name="content" id="content" required>
+        <input type="submit" value="Add Task">
+    </form>
+
+    
+</div>
+{% endblock  %} 
